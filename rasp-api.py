@@ -20,13 +20,14 @@ id = TarjetaRFID()  # Inicializa la instancia del lector RFID
 # Función para enviar lectura RFID al WebSocket
 async def enviar_lectura_al_websocket():
     websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
+    message = {"action": "sendmessage", "message": "hello, everyone!"}
 
     async with websockets.connect(websocket_url) as websocket:
         while True:
             rfid_value = id.read_id()
             if rfid_value:
                 # Enviar la lectura al WebSocket
-                await websocket.send(str(rfid_value))
+                await websocket.send(message)
             await asyncio.sleep(1)
 
 def rfiid_loop(id):
