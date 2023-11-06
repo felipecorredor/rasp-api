@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
+from semaforo import Semaforo
 
 semaforo1 = Semaforo(37, 35, 33, 2, 0)
 semaforo2 = Semaforo(3, 5, 7, 2, 0)
