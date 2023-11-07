@@ -2,21 +2,13 @@ import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from semaforo import Semaforo
 
-import threading
-
 semaforo1 = Semaforo(37, 35, 33, 2, 0)
 semaforo2 = Semaforo(3, 5, 7, 2, 0)
-
-# thsem1 = threading.Thread(target=semaforo1.paint)
-# thsem1.start()
-
-# thsem2 = threading.Thread(target=semaforo2.paint)
-# thsem2.start()
 
 rfid = SimpleMFRC522()
 
 TARJETA = 150564635253
-LLAVERO = 75147236
+LLAVERO = 214018868130
 
 def relay_on(channel):
     semaforo1.state = channel
@@ -39,4 +31,8 @@ while True:
         print(text + ": Access granted")
     
     else:
-        print("Not allowed...")
+        print("Not allowed")
+
+    # Llamar a paint() en cada ciclo
+    semaforo1.paint()
+    semaforo2.paint()
