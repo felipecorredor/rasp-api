@@ -5,7 +5,6 @@ from flask_jwt_extended import JWTManager, jwt_required, create_access_token, ge
 import threading
 from semaforo import Semaforo
 from semaforo_esquina import Semaforo_esquina
-import threading
 import time
 
 #freq1=1
