@@ -7,11 +7,11 @@ import threading
 semaforo1 = Semaforo(37, 35, 33, 2, 0)
 semaforo2 = Semaforo(3, 5, 7, 2, 0)
 
-thsem1 = threading.Thread(target=semaforo1.paint)
-thsem1.start()
+# thsem1 = threading.Thread(target=semaforo1.paint)
+# thsem1.start()
 
-thsem2 = threading.Thread(target=semaforo2.paint)
-thsem2.start()
+# thsem2 = threading.Thread(target=semaforo2.paint)
+# thsem2.start()
 
 rfid = SimpleMFRC522()
 
