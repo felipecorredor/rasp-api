@@ -18,7 +18,6 @@ def relay_off(channel):
     semaforo1.state = channel
     semaforo2.state = channel
 
-# Bucle principal para la lectura RFID
 while True:
     id, text = rfid.read()
     print(id)
@@ -33,8 +32,7 @@ while True:
     
     else:
         print("Not allowed")
-
-# Bucle independiente para el control de semáforos
-while True:
+    
+    # Llamar a paint() en cada ciclo
     semaforo1.paint()
     semaforo2.paint()
