@@ -42,10 +42,10 @@ def read_rfid():
 
 def control_semaforo_1():
     try:
-        semaforo1.paint()
+        while True:
+            semaforo1.paint()
     except Exception as e:
-        print(f"Error en control_semaforo_one: {str(e)}")
-
+        print(f"Error en control_semaforo_two: {str(e)}")
 
 # def control_semaforo_2():
 #     try:
