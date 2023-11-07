@@ -41,12 +41,18 @@ def read_rfid():
             print("Not allowed")
 
 def control_semaforo_one():
-    while True:
-        semaforo1.paint()
+    try:
+        while True:
+            semaforo2.paint()
+    except Exception as e:
+        print(f"Error en control_semaforo_one: {str(e)}")        
 
 def control_semaforo_two():
-    while True:
-        semaforo2.paint()
+    try:
+        while True:
+            semaforo2.paint()
+    except Exception as e:
+        print(f"Error en control_semaforo_two: {str(e)}")
 
 thread_rfid = threading.Thread(target=read_rfid)
 thread_semaforo_one = threading.Thread(target=control_semaforo_one)
