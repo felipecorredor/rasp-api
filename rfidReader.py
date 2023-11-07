@@ -42,8 +42,8 @@ def read_rfid():
 
 def control_semaforos():
     while True:
-        semaforo1.paint()
         semaforo2.paint()
+        semaforo1.paint()
 
 thread_rfid = threading.Thread(target=read_rfid)
 thread_semaforos = threading.Thread(target=control_semaforos)
