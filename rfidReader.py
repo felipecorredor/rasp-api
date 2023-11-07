@@ -47,11 +47,11 @@ def control_semaforo_1():
         print(f"Error en control_semaforo_one: {str(e)}")
 
 
-def control_semaforo_2():
-    try:
-        semaforo2.paint()
-    except Exception as e:
-        print(f"Error en control_semaforo_one: {str(e)}")
+# def control_semaforo_2():
+#     try:
+#         semaforo2.paint()
+#     except Exception as e:
+#         print(f"Error en control_semaforo_one: {str(e)}")
 
 
 thread_rfid = threading.Thread(target=read_rfid)
@@ -60,5 +60,5 @@ thread_rfid.start()
 thread_semaforo_1 = threading.Thread(target=control_semaforo_1)
 thread_semaforo_1.start()
 
-thread_semaforo_2 = threading.Thread(target=control_semaforo_2)
-thread_semaforo_2.start()
+# thread_semaforo_2 = threading.Thread(target=control_semaforo_2)
+# thread_semaforo_2.start()
