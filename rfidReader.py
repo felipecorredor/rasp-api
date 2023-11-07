@@ -13,10 +13,14 @@ LLAVERO = 214018868130
 def relay_on(channel):
     semaforo1.state = channel
     semaforo2.state = channel
+    semaforo1.paint()
+    semaforo2.paint()
 
 def relay_off(channel):
     semaforo1.state = channel
     semaforo2.state = channel
+    semaforo1.paint()
+    semaforo2.paint()
 
 while True:
     id, text = rfid.read()
@@ -33,6 +37,3 @@ while True:
     else:
         print("Not allowed")
     
-    # Llamar a paint() en cada ciclo
-    semaforo1.paint()
-    semaforo2.paint()
