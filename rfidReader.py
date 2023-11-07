@@ -59,6 +59,8 @@ thread_rfid.start()
 
 thread_semaforo_one = threading.Thread(target=control_semaforo_one)
 thread_semaforo_one.start()
+thread_semaforo_one.join()
 
 thread_semaforo_two = threading.Thread(target=control_semaforo_two)
 thread_semaforo_two.start()
+thread_semaforo_two.join()
