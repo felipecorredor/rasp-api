@@ -34,8 +34,8 @@ def relay_on(channel):
     semaforo2.state = channel
 
     # Update the traffic lights
-    semaforo1.paint()
-    semaforo2.paint()
+    # semaforo1.paint()
+    # semaforo2.paint()
 
     # WebSocket
     ws = websocket.create_connection(websocket_url)
@@ -57,10 +57,10 @@ while is_reading:
     try:
         id, text = reader.read()
         if id == TARJETA:
-            relay_on(2)  
+            # relay_on(2)  
             print(text + ": Access granted")
         elif id == LLAVERO:
-            relay_on(1) 
+            # relay_on(1) 
             print(text + ": Access granted")
         else:
             print("Not allowed")
