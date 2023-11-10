@@ -4,8 +4,7 @@ from semaforo import Semaforo
 import threading
 import websocket
 import json
-import signal
-import sys
+
 
 semaforo1 = Semaforo(37, 35, 33, 2, 0)
 semaforo2 = Semaforo(3, 5, 7, 2, 0)
@@ -46,13 +45,7 @@ signal.signal(signal.SIGINT, end_read)
 while is_reading:
     try:
         id, text = reader.read()
-        if id == TARJETA:
-            relay_on(2)  
-            print(text + ": Access granted")
-        elif id == LLAVERO:
-            relay_on(1) 
-            print(text + ": Access granted")
-        else:
-            print("Not allowed")
+        print(f'ID :: {id}')
+        print(f'Badge Number :: {text}')
     finally:
         GPIO.cleanup()
