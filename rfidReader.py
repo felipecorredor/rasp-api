@@ -13,13 +13,13 @@ LLAVERO = 214018868130
 websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
 
 
-def relay_on(channel, message):
+def relay_on(channel, wsMessage):
     semaforo1.state = channel
     semaforo2.state = channel
 
     # websocket
     ws = websocket.create_connection(websocket_url)
-    message = { "action": "sendmessage", "message": message }
+    message = { "action": "sendmessage", "message": str(wsMessage) }
     ws.send(json.dumps(message))
     ws.close()
 
