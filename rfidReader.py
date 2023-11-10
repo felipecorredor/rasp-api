@@ -34,14 +34,14 @@ def relay_on(channel):
     semaforo2.state = channel
 
     # Update the traffic lights
-    # semaforo1.paint()
-    # semaforo2.paint()
+    semaforo1.paint()
+    semaforo2.paint()
 
     # WebSocket
-    ws = websocket.create_connection(websocket_url)
-    message = {"action": "sendmessage", "message": "websocket connection"}
-    ws.send(json.dumps(message))
-    ws.close()
+    # ws = websocket.create_connection(websocket_url)
+    # message = {"action": "sendmessage", "message": "websocket connection"}
+    # ws.send(json.dumps(message))
+    # ws.close()
 
 # Capture SIGINT for cleanup
 def end_read(signal, frame):
