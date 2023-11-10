@@ -1,4 +1,3 @@
-import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from semaforo import Semaforo
 import threading
@@ -14,13 +13,13 @@ LLAVERO = 214018868130
 websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
 
 
-def relay_on(channel):
+def relay_on(channel, message):
     semaforo1.state = channel
     semaforo2.state = channel
 
     # websocket
     ws = websocket.create_connection(websocket_url)
-    message = {"action": "sendmessage", "message": "websocket connection"}
+    message = { "action": "sendmessage", "message": message }
     ws.send(json.dumps(message))
     ws.close()
 
@@ -33,10 +32,10 @@ def read_rfid():
         id, text = rfid.read()
         print(id)
         if id == TARJETA:
-            relay_on(2)  
+            relay_on(2, id)  
             print(text + ": Access granted")
         elif id == LLAVERO:
-            relay_on(1) 
+            relay_on(1, id) 
             print(text + ": Access granted")
         else:
             print("Not allowed")
