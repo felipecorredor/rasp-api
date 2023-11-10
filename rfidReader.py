@@ -10,6 +10,7 @@ semaforo2 = Semaforo(3, 5, 7, 2, 0)
 rfid = SimpleMFRC522()
 TARJETA = 150564635253
 LLAVERO = 214018868130
+is_reading = True
 
 websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
 
@@ -33,7 +34,7 @@ def relay_off(channel):
     semaforo2.state = channel
 
 def read_rfid():
-    while True:
+    while is_reading:
         id, text = rfid.read()
         print(id)
         if id == TARJETA:
