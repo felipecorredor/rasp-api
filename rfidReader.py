@@ -6,6 +6,7 @@ import websocket
 import json
 import signal
 import sys
+import time
 
 semaforo1 = Semaforo(37, 35, 33, 2, 0)
 semaforo2 = Semaforo(3, 5, 7, 2, 0)
@@ -19,11 +20,18 @@ LLAVERO = 214018868130
 
 websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
 
+def paint_semaforo():
+    while is_reading:
+        semaforo1.paint()
+        time.sleep(0.1)
+
+paint_thread = threading.Thread(target=paint_semaforo)
+paint_thread.daemon = True  # This makes the thread exit when the main program exits
+paint_thread.start()
+
 def relay_on(channel):
     semaforo1.state = channel
     semaforo2.state = channel
-
-    semaforo1.paint()
 
     # websocket
     ws = websocket.create_connection(websocket_url)
@@ -40,6 +48,8 @@ def end_read(signal, frame):
     global is_reading
     print('Ctrl+C captured, exiting')
     is_reading = False
+    paint_thread.join()  # Wait for the paint_semaforo thread to finish
+    GPIO.cleanup()
     sys.exit()
 
 # Hook the SIGINT
@@ -57,4 +67,5 @@ while is_reading:
         else:
             print("Not allowed")
     finally:
-        GPIO.cleanup()
+        # No need for GPIO cleanup here, it's done in the signal handler
+        pass
