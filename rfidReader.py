@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
 from semaforo import Semaforo
-import threading
 import websocket
 import json
 import signal
@@ -25,10 +24,6 @@ def paint_semaforo():
         semaforo1.paint()
         time.sleep(0.1)
 
-paint_thread = threading.Thread(target=paint_semaforo)
-paint_thread.daemon = True  # This makes the thread exit when the main program exits
-paint_thread.start()
-
 def relay_on(channel):
     semaforo1.state = channel
     semaforo2.state = channel
@@ -48,7 +43,6 @@ def end_read(signal, frame):
     global is_reading
     print('Ctrl+C captured, exiting')
     is_reading = False
-    paint_thread.join()  # Wait for the paint_semaforo thread to finish
     GPIO.cleanup()
     sys.exit()
 
@@ -66,6 +60,7 @@ while is_reading:
             print(text + ": Access granted")
         else:
             print("Not allowed")
+        paint_semaforo()  # Run the paint_semaforo directly in the main loop
     finally:
         # No need for GPIO cleanup here, it's done in the signal handler
         pass
