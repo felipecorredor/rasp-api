@@ -61,7 +61,7 @@ while is_reading:
             # relay_on(2)  
         elif id == LLAVERO:
             print(text + ": Access granted")
-            relay_on(1) 
+            # relay_on(1) 
         else:
             print("Not allowed")
     finally:
