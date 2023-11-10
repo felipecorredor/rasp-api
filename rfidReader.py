@@ -57,11 +57,11 @@ while is_reading:
     try:
         id, text = reader.read()
         if id == TARJETA:
-            relay_on(2)  
             print(text + ": Access granted")
+            # relay_on(2)  
         elif id == LLAVERO:
-            relay_on(1) 
             print(text + ": Access granted")
+            relay_on(1) 
         else:
             print("Not allowed")
     finally:
