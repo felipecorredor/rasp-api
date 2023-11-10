@@ -17,11 +17,13 @@ def relay_on(channel):
     semaforo1.state = channel
     semaforo2.state = channel
 
+    semaforo1.paint()
+
     # websocket
-    # ws = websocket.create_connection(websocket_url)
-    # message = {"action": "sendmessage", "message": "websocket connection"}
-    # ws.send(json.dumps(message))
-    # ws.close()
+    ws = websocket.create_connection(websocket_url)
+    message = {"action": "sendmessage", "message": "websocket connection"}
+    ws.send(json.dumps(message))
+    ws.close()
 
 def relay_off(channel):
     semaforo1.state = channel
