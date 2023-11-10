@@ -13,6 +13,7 @@ LLAVERO = 214018868130
 
 websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
 
+
 def relay_on(channel):
     semaforo1.state = channel
     semaforo2.state = channel
@@ -40,18 +41,18 @@ def read_rfid():
         else:
             print("Not allowed")
 
-def control_semaforo_uno():
-    while True:
-        semaforo1.paint()
+# def control_semaforo_uno():
+#     while True:
+#         semaforo1.paint()
 
 # def control_semaforo_dos():
 #     while True:
 #         semaforo2.paint()
 
 thread_rfid = threading.Thread(target=read_rfid)
-thread_semaforo_uno = threading.Thread(target=control_semaforo_uno)
+# thread_semaforo_uno = threading.Thread(target=control_semaforo_uno)
 # thread_semaforo_dos = threading.Thread(target=control_semaforo_dos)
 
 thread_rfid.start()
-thread_semaforo_uno.start()
+# thread_semaforo_uno.start()
 # thread_semaforo_dos.start()
