@@ -8,11 +8,6 @@ is_reading = True
 
 GPIO.setwarnings(False)
 
-TARJETA = 150564635253
-LLAVERO = 214018868130
-
-
-
 # Capture SIGINT for cleanup
 def end_read(signal, frame):
     global is_reading
