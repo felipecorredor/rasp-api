@@ -1,77 +1,27 @@
 import RPi.GPIO as GPIO
 from mfrc522 import SimpleMFRC522
-from semaforo import Semaforo
-import threading
-import websocket
-import json
-import time
+import signal
+import sys
 
-semaforo1 = Semaforo(37, 35, 33, 2, 0)
-semaforo2 = Semaforo(3, 5, 7, 2, 0)
-rfid = SimpleMFRC522()
-TARJETA = 150564635253
-LLAVERO = 214018868130
+reader = SimpleMFRC522()
+is_reading = True
 
-websocket_url = "wss://qti41egldh.execute-api.us-east-1.amazonaws.com/production"
+GPIO.setwarnings(False)
 
-def establish_websocket_connection():
+# Capture SIGINT for cleanup
+def end_read(signal, frame):
+    global is_reading
+    print('Ctrl+C captured, exiting')
+    is_reading = False
+    sys.exit()
+
+# Hook the SIGINT
+signal.signal(signal.SIGINT, end_read)
+
+while is_reading:
     try:
-        ws = websocket.create_connection(websocket_url)
-        return ws
-    except Exception as e:
-        print(f"Error establishing websocket connection: {e}")
-        return None
-
-def relay_on(channel, ws):
-    semaforo1.state = channel
-    semaforo2.state = channel
-
-    if ws:
-        message = {"action": "sendmessage", "message": "websocket connection"}
-        ws.send(json.dumps(message))
-
-def relay_off(channel):
-    semaforo1.state = channel
-    semaforo2.state = channel
-
-def read_rfid(ws):
-    while True:
-        id, text = rfid.read()
-        print(id)
-        if id == TARJETA:
-            relay_on(2, ws)
-            print(text + ": Access granted")
-        elif id == LLAVERO:
-            relay_on(1, ws)
-            print(text + ": Access granted")
-        else:
-            print("Not allowed")
-
-def control_semaforo_uno():
-    while True:
-        semaforo1.paint()
-
-# def control_semaforo_dos():
-#     while True:
-#         semaforo2.paint()
-
-# Establecer la conexión fuera de los bucles
-ws = establish_websocket_connection()
-
-thread_rfid = threading.Thread(target=read_rfid, args=(ws,))
-thread_semaforo_uno = threading.Thread(target=control_semaforo_uno)
-# thread_semaforo_dos = threading.Thread(target=control_semaforo_dos)
-
-thread_rfid.start()
-thread_semaforo_uno.start()
-# thread_semaforo_dos.start()
-
-# Esperar antes de cerrar el programa
-try:
-    while True:
-        time.sleep(1)
-except KeyboardInterrupt:
-    # Manejar interrupción de teclado (Ctrl+C)
-    GPIO.cleanup()
-    if ws:
-        ws.close()
+        id, text = reader.read()
+        print(f'ID :: {id}')
+        print(f'Badge Number :: {text}')
+    finally:
+        GPIO.cleanup()
