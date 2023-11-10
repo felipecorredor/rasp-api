@@ -4,7 +4,8 @@ from semaforo import Semaforo
 import threading
 import websocket
 import json
-
+import signal
+import sys
 
 semaforo1 = Semaforo(37, 35, 33, 2, 0)
 semaforo2 = Semaforo(3, 5, 7, 2, 0)
